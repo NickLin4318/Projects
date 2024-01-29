@@ -1,0 +1,84 @@
+﻿@model AtosMVC.Models.AccountModel
+@{
+    ViewBag.Title = "Create2";
+}
+
+
+<h2>Create2</h2>
+
+@using (Ajax.BeginForm(new AjaxOptions
+{
+    //UpdateTargetId = "ajaxTargetDiv",
+    Url = Url.Action("GetName"),
+    OnSuccess = "afterSuccess"
+}))
+{
+    <div class="well">
+        <div class="row">
+            @Html.Label("你的帳號:", new { @class = "col-sm-2 control-label" })
+            <div class="col-md-10">
+                @Html.Editor("userName", new { htmlAttributes = new { @class = "form-control", @Placeholder = "請輸入你的帳號" } })
+                <div id="ajaxTargetDiv">
+                    
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @Html.LabelFor(model => model.birthday, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.birthday, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.birthday, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="row">
+            @Html.LabelFor(model => model.sex, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sex, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.sex, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-offset-8 col-sm-4">
+
+                <button id="submit" type="submit" class="btn btn-primary">送出</button>
+            </div>
+        </div>
+    </div>
+}
+<script>
+    function afterSuccess(data) {
+        console.log(data)
+        if (data == "此帳號已經被註冊過了") {
+            alert("此帳號已經被註冊過了");
+        }
+        else if (data == "可以使用"){
+            alert("可以使用");
+        }
+        alert(data);
+    }
+    //$(function () {
+    //    $("#submit").click(function () {
+    //        $.ajax({
+    //            url: '/Home/checkAcc',
+    //            type: "GET",
+    //            data: {
+    //                acc: $("#userName").val()
+    //            },
+    //            error: function () {
+    //                alert('失敗');
+    //            },
+    //            success: function (data) {
+    //                if (data == "duplicate") {
+    //                    alert("此帳號已經被註冊了!")
+    //                }
+    //                alert(data);
+    //            }
+    //        });
+    //    });
+    //});
+</script>
+
+@section scripts{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+}

@@ -1,0 +1,63 @@
+﻿@model GSSWEB.ViewModels.AddModel
+
+<h2>Add</h2>
+
+<div class="row">
+    <div class="col-lg-12">
+        <form method="post" action="/Library/Add" id="frmAdd">
+            <div class="col-lg-12">
+                <label for="book_name">Book Name</label>
+                <input type="text" class="form-control" name="book_name" id="book_name" />
+                <label for="author">Author</label>
+                <input type="text" class="form-control" name="author" id="author" />
+                <label for="publisher">Publisher</label>
+                <input type="text" class="form-control" name="publisher" id="publisher" />
+                <label for="bought_date">Bought Date</label>
+                <input class="form-control" type="date" name="bought_date" id="bought_date" value="@DateTime.Now" />
+                <label for="book_class">Book Class</label>
+                <select class="form-control" name="book_class" id="book_class">
+                    @{
+                        if (Model.BookClass.Count() > 0)
+                        {
+                            foreach (var item in Model.BookClass)
+                            {
+                                <option value="@item.BOOK_CLASS_ID">@item.BOOK_CLASS_NAME</option>
+                            }
+                        }
+                    }
+                </select>
+                <label for="description">Description</label>
+                <textarea class="form-control" name="description" id="description"></textarea>
+                <input type="hidden" name="book_status" value="A" />
+                <input type="hidden" name="book_keeper" value="" />
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row" style="margin-top: 1%;">
+    <div class="col-lg-11" style="padding-left: 3%;">
+        <button class="btn" onclick="submit();">Submit</button>
+        <button class="btn" onclick="backToIndex();">Back</button>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        
+    });
+
+    function submit() {
+        let errMsg = "";
+        
+        if ($.trim($("#book_name").val()) == "") { errMsg += "Book Name\n" }
+        if ($.trim($("#author").val()) == "") errMsg += "Author\n";
+        if ($.trim($("#publisher").val()) == "") errMsg += "Publisher\n";
+        if (errMsg != "") alert("Enter the value:\n" + errMsg)
+        else document.getElementById("frmAdd").submit();
+    }
+
+    function backToIndex() {
+        location.href = "/Library/Index";
+    }
+</script>
