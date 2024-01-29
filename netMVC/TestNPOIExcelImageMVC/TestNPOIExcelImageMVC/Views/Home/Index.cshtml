@@ -1,9 +1,0 @@
-﻿@{
-    ViewBag.Title = "Home Page";
-}
-<div>
-    @using (Html.BeginForm("Download", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "PostForm" }))
-    {
-        <input type="submit" value="下載" />
-    }
-</div>
